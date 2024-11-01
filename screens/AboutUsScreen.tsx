@@ -7,7 +7,7 @@ const AboutUsScreen = () => (
   <ScrollView style={styles.container}>
     <View style={styles.header}>
       <Image source={require('../assets/logo.png')} style={styles.logo} />
-      <Text style={styles.title}>About Us | Empowering the Nation</Text>
+      <Text style={styles.title}>About Us Page | Empowering the Nation</Text>
     </View>
 
     <View style={styles.content}>
