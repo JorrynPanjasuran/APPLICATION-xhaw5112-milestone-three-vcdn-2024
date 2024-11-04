@@ -1,29 +1,30 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, Alert, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, Alert, ScrollView, StyleSheet, Modal } from 'react-native';
 
-// Define the ContactUsScreen component with navigation as a prop
 const ContactUsScreen = ({ navigation }: any) => {
-  // State variables for input fields
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   // Handle form submission
   const handleSubmit = () => {
-    // Basic validation
     if (!name || !email || !message) {
-      Alert.alert('Error', 'Please fill in all fields.');
+      setAlertMessage('Please fill in all fields.');
+      setModalVisible(true);
       return;
     }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-      Alert.alert('Error', 'Please enter a valid email address.');
+      setAlertMessage('Please enter a valid email address.');
+      setModalVisible(true);
       return;
     }
 
-    // Simulate sending the message
-    Alert.alert('Message Sent!', 'Thank you for reaching out. We will get back to you soon.');
+    setAlertMessage('Thank you for reaching out. We will get back to you soon.');
+    setModalVisible(true);
 
     // Clear input fields after submission
     setName('');
@@ -44,13 +45,11 @@ const ContactUsScreen = ({ navigation }: any) => {
           Whether you’re looking to upskill your employees or yourself, we're here to help! Reach out to learn more about our courses and services at Empowering the Nation.
         </Text>
 
-        {/* Image with specific size */}
         <Image
           source={{ uri: 'https://i.pinimg.com/736x/94/e7/be/94e7beb337afaa329484be3345367e06.jpg' }}
           style={styles.contactImage}
         />
 
-        {/* Contact Form */}
         <View style={styles.formContainer}>
           <TextInput
             style={styles.input}
@@ -81,7 +80,6 @@ const ContactUsScreen = ({ navigation }: any) => {
           </TouchableOpacity>
         </View>
 
-        {/* Contact Info and Image side by side */}
         <View style={styles.contactRow}>
           <View style={styles.contactInfo}>
             <Text style={styles.heading}>Contact Information</Text>
@@ -100,11 +98,27 @@ const ContactUsScreen = ({ navigation }: any) => {
       <View style={styles.footer}>
         <Text style={styles.footerText}>© 2024 Empowering the Nation. All rights reserved.</Text>
       </View>
+
+      {/* Custom Alert Modal */}
+      <Modal
+        transparent
+        animationType="slide"
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalText}>{alertMessage}</Text>
+            <TouchableOpacity style={styles.modalButton} onPress={() => setModalVisible(false)}>
+              <Text style={styles.modalButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
 
-// Styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -206,6 +220,41 @@ const styles = StyleSheet.create({
   footerText: {
     color: '#fff',
     fontSize: 14,
+  },
+  // New styles for the custom alert modal
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    width: 300,
+    padding: 20,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 18,
+    color: '#333',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  modalButton: {
+    backgroundColor: '#f0286e',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+  },
+  modalButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

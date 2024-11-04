@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { CartProvider } from './screens/CartContext';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import WelcomeScreen from './screens/WelcomeScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -25,9 +25,21 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
-const BottomTabs = () => {
+const BottomTabs = ({ navigation }) => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: true,
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ marginLeft: 10 }}>
+            <Ionicons name="menu-outline" size={30} color="#ffffff" />
+          </TouchableOpacity>
+        ),
+        name: null, // Hide header title
+        headerStyle: { backgroundColor: '#ff4081' },
+        headerTintColor: '#ffffff',
+      }}
+    >
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -36,7 +48,6 @@ const BottomTabs = () => {
             <Ionicons name="home-outline" color={color} size={size} />
           ),
         }}
-
       />
       <Tab.Screen
         name="Courses"
@@ -71,7 +82,22 @@ const BottomTabs = () => {
 
 const HomeDrawer = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      screenOptions={{
+        drawerStyle: {
+          backgroundColor: '#ffe6f0',
+          width: 250,
+        },
+        drawerLabelStyle: {
+          fontSize: 16,
+          fontWeight: 'bold',
+          color: '#ff4081',
+        },
+        drawerActiveTintColor: '#ff4081',
+        drawerInactiveTintColor: '#ff80ab',
+        headerShown: false,
+      }}
+    >
       <Drawer.Screen
         name="Home Tabs"
         component={BottomTabs}
@@ -108,9 +134,9 @@ const App = () => (
   <CartProvider>
     <SafeAreaView style={{ flex: 1 }}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          <Stack.Screen name="Home" component={HomeDrawer} options={{ headerShown: false }} />
+          <Stack.Screen name="Home" component={HomeDrawer} />
           <Stack.Screen name="FirstAid" component={FirstAidScreen} />
           <Stack.Screen name="Sewing" component={SewingScreen} />
           <Stack.Screen name="Landscaping" component={LandscapingScreen} />
@@ -125,8 +151,5 @@ const App = () => (
     </SafeAreaView>
   </CartProvider>
 );
-
-
-
 
 export default App;
