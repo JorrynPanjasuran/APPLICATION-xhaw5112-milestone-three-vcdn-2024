@@ -33,21 +33,21 @@ const CoursesScreen = ({ navigation }) => (
           imageSource={{ uri: 'https://plus.unsplash.com/premium_photo-1661727647956-7d7d3e8ed550' }}
           title="Child Minding"
           description="An introduction to fundamental childcare techniques."
-          buttonTitle="Go to Child Minding"
+          buttonTitle="Learn More"
           onPress={() => navigation.navigate('ChildMinding')}
         />
         <CourseCard
           imageSource={{ uri: 'https://images.unsplash.com/photo-1466637574441-749b8f19452f' }}
           title="Cooking Skills"
           description="Discover essential kitchen skills and simple recipes."
-          buttonTitle="Go to Cooking"
+          buttonTitle="Learn More"
           onPress={() => navigation.navigate('Cooking')}
         />
         <CourseCard
           imageSource={{ uri: 'https://images.unsplash.com/photo-1460533893735-45cea2212645' }}
           title="Garden Maintenance"
           description="Basic knowledge on plant care, soil prep, and seasonal tasks."
-          buttonTitle="Go to Garden Maintenance"
+          buttonTitle="Learn More"
           onPress={() => navigation.navigate('GardenMaintenance')}
         />
       </View>
@@ -88,9 +88,7 @@ const CoursesScreen = ({ navigation }) => (
       </View>
     </View>
 
-    <View style={styles.footer}>
-      <Text style={styles.footerText}>© 2024 Empowering the Nation. All rights reserved.</Text>
-    </View>
+
   </ScrollView>
 );
 
@@ -106,9 +104,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#81D8D0',
   },
   logo: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 200,
+    height: 200,
+    borderRadius: 100,
   },
   title: {
     fontSize: 24,
@@ -201,6 +199,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
+
 });
 
 export default CoursesScreen;

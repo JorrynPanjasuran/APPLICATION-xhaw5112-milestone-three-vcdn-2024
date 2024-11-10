@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigationState } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { CartProvider } from './screens/CartContext';
@@ -26,12 +26,28 @@ const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
 const BottomTabs = ({ navigation }) => {
+  const routeNames = useNavigationState(state => state.routes[state.index].state?.routeNames || []);
+  const currentRoute = routeNames[routeNames.length - 1];
+
+  // Determine if the current route is About Us or Contact Us
+  const isOnRestrictedScreen = currentRoute === 'About Us' || currentRoute === 'Contact Us';
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: true,
         headerLeft: () => (
-          <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ marginLeft: 10 }}>
+          <TouchableOpacity
+            onPress={() => {
+              if (!isOnRestrictedScreen) {
+                navigation.openDrawer(); // Open drawer if not on restricted screens
+              } else {
+                // Optionally show an alert or do nothing
+                console.log('Drawer is disabled on this screen.');
+              }
+            }}
+            style={{ marginLeft: 10 }}
+          >
             <Ionicons name="menu-outline" size={30} color="#ffffff" />
           </TouchableOpacity>
         ),
@@ -151,5 +167,7 @@ const App = () => (
     </SafeAreaView>
   </CartProvider>
 );
+
+
 
 export default App;

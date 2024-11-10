@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, Alert, ScrollView, StyleSheet, Modal } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons'; // Import Ionicons for the icon
 
 const ContactUsScreen = ({ navigation }: any) => {
   const [name, setName] = useState('');
@@ -35,6 +36,11 @@ const ContactUsScreen = ({ navigation }: any) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
+        {/* Go Back Button as Icon */}
+        <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={30} color="black" />
+        </TouchableOpacity>
+
         <Image source={require('../assets/logo.png')} style={styles.logo} />
         <Text style={styles.title}>Contact Us | Empowering the Nation</Text>
       </View>
@@ -128,6 +134,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     backgroundColor: '#81D8D0',
+    width: '100%',
+  },
+  goBackButton: {
+    position: 'absolute',
+    left: 20,
+    top: 40,
+    zIndex: 1,
   },
   logo: {
     width: 200,
@@ -233,17 +246,12 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     alignItems: 'center',
   },
   modalText: {
     fontSize: 18,
-    color: '#333',
-    textAlign: 'center',
     marginBottom: 20,
+    textAlign: 'center',
   },
   modalButton: {
     backgroundColor: '#f0286e',

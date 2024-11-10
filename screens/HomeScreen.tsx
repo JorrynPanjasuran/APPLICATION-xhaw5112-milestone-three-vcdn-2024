@@ -49,11 +49,6 @@ const HomeScreen = () => {
         <Text style={styles.listItem}>• Cooking</Text>
         <Text style={styles.listItem}>• Garden Maintenance</Text>
       </View>
-
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>© 2024 Empowering the Nation. All rights reserved.</Text>
-        <Text style={styles.footerText}>Email: info@empoweringthenation.co.za | Phone: +27-123-456-7890</Text>
-      </View>
     </ScrollView>
   );
 };
